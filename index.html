@@ -1,0 +1,242 @@
+<!doctype html>
+<html lang="de">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Raumpsychologie v3 – Klarheit ohne Kampf</title>
+  <meta name="theme-color" content="#e9f2ee" />
+  <link rel="manifest" href="manifest.json" />
+  <link rel="icon" href="assets/icons/icon-192.png" sizes="192x192" />
+  <link rel="apple-touch-icon" href="assets/icons/icon-512.png" />
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <header class="topbar">
+    <div class="brand">
+      <span class="logo">🪴</span>
+      <h1>Raumpsychologie v3<span class="muted"> – Klarheit ohne Kampf</span></h1>
+    </div>
+    <div class="controls">
+      <button id="btn-theme" title="Hell/Dunkel">☾</button>
+      <select id="lang">
+        <option value="de" selected>DE</option>
+        <option value="en">EN</option>
+      </select>
+      <button id="btn-install" title="Als App installieren" style="display:none">⬇︎</button>
+    </div>
+  </header>
+
+  <nav class="tabs">
+    <button data-tab="wohnung" class="active">🏡 Wohnung</button>
+    <button data-tab="scan">🌱 RaumScan</button>
+    <button data-tab="resonanz">🪞 Resonanz</button>
+    <button data-tab="bindung">🤝 Bindung</button>
+    <button data-tab="selbst">🔁 Selbst</button>
+    <button data-tab="reset">🧘 Reset</button>
+    <button data-tab="archiv">🗒 Muster</button>
+    <button data-tab="ethik">🕯 Ethik</button>
+  </nav>
+
+  <main>
+    <dialog id="intro" class="sheet">
+      <h2 data-i="intro_title">Willkommen</h2>
+      <p data-i="intro_text">Diese App hilft dir, Ruhe zu halten, bevor du reagierst. Beobachten statt bewerten. Ordnen statt analysieren. Verlassen statt kämpfen.</p>
+      <button id="intro-ok" class="primary" data-i="intro_ok">Beginnen</button>
+    </dialog>
+
+    <section class="card info">
+      <h2>💚 Ort der Sicherheit</h2>
+      <p class="muted">„Vertrauen ohne Worte“ – erinnere dich an das Bild deines Tieres, das dir vollkommen vertraut.</p>
+      <button id="btn-safety" class="primary">Erinnern</button>
+      <div id="safety-text" class="badge" style="display:none;">Ich bin sicher. Ich sende Ruhe, keine Beweise.</div>
+    </section>
+
+    <section id="tab-wohnung" class="card active">
+      <h2>🏡 Wohnung Check – äußere Ordnung</h2>
+      <p class="muted">Bewerte jeden Raum von 1 (unruhig) bis 10 (sehr ruhig).</p>
+      <div class="room-grid">
+        <article class="room">
+          <h3>🛏 Schlafzimmer</h3>
+          <div class="tri">
+            <label>Boden <output id="schl-boden-o">5</output><input id="schl-boden" type="range" min="1" max="10" value="5"></label>
+            <label>Flächen <output id="schl-flaechen-o">5</output><input id="schl-flaechen" type="range" min="1" max="10" value="5"></label>
+            <label>Atmosphäre <output id="schl-atmo-o">5</output><input id="schl-atmo" type="range" min="1" max="10" value="5"></label>
+          </div>
+          <div id="schl-note" class="note muted"></div>
+          <textarea id="schl-txt" placeholder="Wenn dieser Raum sprechen könnte … (optional)"></textarea>
+        </article>
+        <article class="room">
+          <h3>🛋 Wohnzimmer</h3>
+          <div class="tri">
+            <label>Boden <output id="wohn-boden-o">5</output><input id="wohn-boden" type="range" min="1" max="10" value="5"></label>
+            <label>Flächen <output id="wohn-flaechen-o">5</output><input id="wohn-flaechen" type="range" min="1" max="10" value="5"></label>
+            <label>Atmosphäre <output id="wohn-atmo-o">5</output><input id="wohn-atmo" type="range" min="1" max="10" value="5"></label>
+          </div>
+          <div id="wohn-note" class="note muted"></div>
+          <textarea id="wohn-txt" placeholder="Wenn dieser Raum sprechen könnte … (optional)"></textarea>
+        </article>
+        <article class="room">
+          <h3>🍳 Küche</h3>
+          <div class="tri">
+            <label>Boden <output id="kue-boden-o">5</output><input id="kue-boden" type="range" min="1" max="10" value="5"></label>
+            <label>Flächen <output id="kue-flaechen-o">5</output><input id="kue-flaechen" type="range" min="1" max="10" value="5"></label>
+            <label>Atmosphäre <output id="kue-atmo-o">5</output><input id="kue-atmo" type="range" min="1" max="10" value="5"></label>
+          </div>
+          <div id="kue-note" class="note muted"></div>
+          <textarea id="kue-txt" placeholder="Wenn dieser Raum sprechen könnte … (optional)"></textarea>
+        </article>
+        <article class="room">
+          <h3>🚿 Bad</h3>
+          <div class="tri">
+            <label>Boden <output id="bad-boden-o">5</output><input id="bad-boden" type="range" min="1" max="10" value="5"></label>
+            <label>Flächen <output id="bad-flaechen-o">5</output><input id="bad-flaechen" type="range" min="1" max="10" value="5"></label>
+            <label>Atmosphäre <output id="bad-atmo-o">5</output><input id="bad-atmo" type="range" min="1" max="10" value="5"></label>
+          </div>
+          <div id="bad-note" class="note muted"></div>
+          <textarea id="bad-txt" placeholder="Wenn dieser Raum sprechen könnte … (optional)"></textarea>
+        </article>
+      </div>
+
+      <div id="home-result" class="badge">Gesamt: 0% · –</div>
+      <p id="home-tip" class="muted"></p>
+      <div class="row">
+        <button id="btn-home-save" class="primary">Heute speichern</button>
+        <button id="btn-home-repeat">Heute wiederholen</button>
+      </div>
+
+      <div class="after card-min">
+        <label for="rest-home" class="muted">Emotionale Restladung (1–10)</label>
+        <input id="rest-home" type="range" min="1" max="10" value="3" />
+        <div id="rest-home-note" class="subnote"></div>
+      </div>
+    </section>
+
+    <section id="tab-scan" class="card">
+      <h2>🌱 RaumScan – tägliches Stimmungsbarometer</h2>
+      <div class="tri">
+        <label>🧱 Boden <output id="s-boden-o">5</output><input id="s-boden" type="range" min="1" max="10" value="5"></label>
+        <label>💡 Licht <output id="s-licht-o">5</output><input id="s-licht" type="range" min="1" max="10" value="5"></label>
+        <label>💨 Luft <output id="s-luft-o">5</output><input id="s-luft" type="range" min="1" max="10" value="5"></label>
+        <label>🔊 Klang <output id="s-klang-o">5</output><input id="s-klang" type="range" min="1" max="10" value="5"></label>
+        <label>🧺 Ordnung <output id="s-ordnung-o">5</output><input id="s-ordnung" type="range" min="1" max="10" value="5"></label>
+      </div>
+      <div id="scan-result" class="badge">Neutral · 0%</div>
+      <div class="row">
+        <button id="btn-scan-save" class="primary">Heute speichern</button>
+        <button id="btn-scan-reset">Zurücksetzen</button>
+      </div>
+      <div class="after card-min">
+        <label for="rest-scan" class="muted">Emotionale Restladung (1–10)</label>
+        <input id="rest-scan" type="range" min="1" max="10" value="3" />
+        <div id="rest-scan-note" class="subnote"></div>
+      </div>
+      <h3 class="mt">📅 Verlauf (7 Tage)</h3>
+      <div id="scan-bars" class="bars"></div>
+    </section>
+
+    <section id="tab-resonanz" class="card">
+      <h2>🪞 Resonanz-Check</h2>
+      <form id="reso-form" class="q-list">
+        <label>1. Interessiere ich mich wirklich für die andere Person – oder für ihr Bild von mir?<input type="range" min="1" max="5" value="3" /></label>
+        <label>2. Gebe ich Energie, ohne auf Rückgabe zu achten?<input type="range" min="1" max="5" value="3" /></label>
+        <label>3. Zeigt die andere Person echtes Interesse an mir?<input type="range" min="1" max="5" value="3" /></label>
+        <label>4. Reagiere ich auf das, was ist – oder auf meine Vorstellung?<input type="range" min="1" max="5" value="3" /></label>
+        <label>5. Kann ich meine Meinung äußern, ohne Angst vor Ablehnung?<input type="range" min="1" max="5" value="3" /></label>
+        <label>6. Handle ich aus Verbindung oder aus Pflichtgefühl?<input type="range" min="1" max="5" value="3" /></label>
+      </form>
+      <div class="row">
+        <button id="btn-reso-calc" class="primary">Auswerten</button>
+        <button id="btn-reso-reset">Zurücksetzen</button>
+      </div>
+      <div id="reso-result" class="badge">–</div>
+      <p id="reso-tip" class="muted"></p>
+      <div class="after card-min">
+        <label for="rest-reso" class="muted">Emotionale Restladung (1–10)</label>
+        <input id="rest-reso" type="range" min="1" max="10" value="3" />
+        <div id="rest-reso-note" class="subnote"></div>
+      </div>
+    </section>
+
+    <section id="tab-bindung" class="card">
+      <h2>🤝 Bindungs‑Reality‑Check</h2>
+      <details class="card-min"><summary>🔹 Lovebombing- & Spiegelcheck</summary>
+        <form id="love-form" class="q-list">
+          <label>1. Tempo – geht Nähe zu schnell?<input type="range" min="1" max="5" value="3" /></label>
+          <label>2. Konsistenz – passen Worte zu Taten?<input type="range" min="1" max="5" value="3" /></label>
+          <label>3. Authentizität – sind kleine Unsicherheiten sichtbar?<input type="range" min="1" max="5" value="3" /></label>
+          <label>4. Übertriebene Spiegelung – „perfekt verstanden“ ohne Basis?<input type="range" min="1" max="5" value="3" /></label>
+          <label>5. Selbstanpassung – spiegle ich übertrieben, um zu gefallen?<input type="range" min="1" max="5" value="3" /></label>
+        </form>
+        <div id="love-result" class="badge">–</div>
+      </details>
+      <h3>🔹 10 Hauptfragen</h3>
+      <form id="bind-form" class="q-list">
+        <label>1. Unstimmigkeiten werden besprochen statt bestritten.<input type="range" min="1" max="5" value="3" /></label>
+        <label>2. Grenzen werden respektiert.<input type="range" min="1" max="5" value="3" /></label>
+        <label>3. Kleine Lügen werden zugegeben.<input type="range" min="1" max="5" value="3" /></label>
+        <label>4. Hilfe kommt ohne Vorwürfe.<input type="range" min="1" max="5" value="3" /></label>
+        <label>5. Über andere wird fair gesprochen.<input type="range" min="1" max="5" value="3" /></label>
+        <label>6. Aus Vergangenheit wurde gelernt.<input type="range" min="1" max="5" value="3" /></label>
+        <label>7. Nach Gesprächen bin ich klar, nicht verwirrt.<input type="range" min="1" max="5" value="3" /></label>
+        <label>8. Keine unterschwellige Verachtung.<input type="range" min="1" max="5" value="3" /></label>
+        <label>9. Zukunft fühlt sich ruhig an.<input type="range" min="1" max="5" value="3" /></label>
+        <label>10. Vertrauen basiert auf Handlungen.<input type="range" min="1" max="5" value="3" /></label>
+      </form>
+      <h3>🔹 15 Ja/Nein-Fragen</h3>
+      <div id="bind-yn" class="ynlist">
+        <div class="yn"><span>Wird Verantwortung übernommen?</span><button>Ja</button><button>Nein</button></div>
+        <div class="yn"><span>Wird Schuld häufig verschoben?</span><button>Ja</button><button>Nein</button></div>
+        <div class="yn"><span>Respekt auch in Stress?</span><button>Ja</button><button>Nein</button></div>
+        <div class="yn"><span>Konflikte ruhig besprechbar?</span><button>Ja</button><button>Nein</button></div>
+        <div class="yn"><span>Akzeptiert die Person mein „Nein“?</span><button>Ja</button><button>Nein</button></div>
+      </div>
+      <div class="q card-min"><label>Freitext:</label><textarea id="bind-note" placeholder="Als du das letzte Mal eine schwierige Zeit überwinden musstest – was hast du dabei gelernt?"></textarea></div>
+      <div class="row"><button id="btn-bind-calc" class="primary">Auswerten</button><button id="btn-bind-reset">Zurücksetzen</button></div>
+      <div id="bind-result" class="badge">–</div><p id="bind-tip" class="muted"></p>
+      <div class="after card-min"><label for="rest-bind" class="muted">Emotionale Restladung (1–10)</label><input id="rest-bind" type="range" min="1" max="10" value="3" /><div id="rest-bind-note" class="subnote"></div></div>
+    </section>
+
+    <section id="tab-selbst" class="card">
+      <h2>🔁 Selbst‑Check</h2>
+      <form id="self-form" class="q-list">
+        <label>Ich helfe ungefragt.<input type="range" min="1" max="5" value="3" /></label>
+        <label>Ich übernehme Aufgaben, sonst geht es schief.<input type="range" min="1" max="5" value="3" /></label>
+        <label>Ich ärgere mich, wenn Dankbarkeit ausbleibt.<input type="range" min="1" max="5" value="3" /></label>
+        <label>Ich bleibe, obwohl ich erschöpft bin.<input type="range" min="1" max="5" value="3" /></label>
+        <label>Ich fühle mich verantwortlich für die Stimmung anderer.<input type="range" min="1" max="5" value="3" /></label>
+        <label>Ich rette statt zu respektieren.<input type="range" min="1" max="5" value="3" /></label>
+        <label>Ich handle aus Pflicht statt Freude.<input type="range" min="1" max="5" value="3" /></label>
+        <label>Ich erwarte Dankbarkeit.<input type="range" min="1" max="5" value="3" /></label>
+        <label>Ich tue Gutes, um gemocht zu werden.<input type="range" min="1" max="5" value="3" /></label>
+        <label>Ich verliere Energie, wenn ich versuche, verstanden zu werden.<input type="range" min="1" max="5" value="3" /></label>
+      </form>
+      <div class="row"><button id="btn-self-calc" class="primary">Auswerten</button><button id="btn-self-reset">Zurücksetzen</button></div>
+      <div id="self-result" class="badge">–</div><p id="self-tip" class="muted"></p>
+      <div class="after card-min"><label for="rest-self" class="muted">Emotionale Restladung (1–10)</label><input id="rest-self" type="range" min="1" max="10" value="3" /><div id="rest-self-note" class="subnote"></div></div>
+    </section>
+
+    <section id="tab-reset" class="card">
+      <h2>🧘 Mini‑Reset & Nachbeben</h2>
+      <ol class="muted small"><li>Atme – länger aus als ein.</li><li>Benenn 3 Dinge, die du siehst.</li><li>Sag dir: „Ruhe ist sicher.“</li></ol>
+      <div class="breath"><div class="circle" id="breath-circle"></div><div id="breath-phase">Bereit</div><button id="breath-start" class="primary">4‑7‑8 starten</button></div>
+    </section>
+
+    <section id="tab-archiv" class="card">
+      <h2>🗒 Muster‑Archiv</h2>
+      <div class="row"><input id="arch-input" placeholder="Notiz hinzufügen (privat, lokal)" /><button id="arch-add" class="primary">Speichern</button></div>
+      <ul id="arch-list" class="list"></ul>
+      <button id="arch-clear" class="danger">Archiv leeren</button>
+    </section>
+
+    <section id="tab-ethik" class="card">
+      <h2>🕯 Ethik & Rahmung</h2>
+      <p class="muted">Keine Diagnosen. Keine Cloud. Keine Accounts. Alle Daten bleiben auf deinem Gerät. Ersetzt keine Therapie.</p>
+      <h3>🕊 Diplomatie statt Drama – Carnegie Exit (PDF)</h3>
+      <p><a href="assets/carnegie-exit.pdf" target="_blank">PDF öffnen</a></p>
+    </section>
+  </main>
+
+  <footer class="foot"><small>© 2025 – Raumpsychologie v3 • lokal & privat • DE/EN</small></footer>
+  <script src="app.js"></script>
+</body>
+</html>
